@@ -1,5 +1,5 @@
 const BASE_URL = 'https://pokeapi.co/api/v2/';
-export {request, getPokemons, getPokemon};
+export {request, getPokemons, getPokemon, searchPokemons};
 
 const request = async (
     endpoint,
@@ -23,6 +23,11 @@ const request = async (
         const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
         // Envoyer la requête
         const response = await fetch(url, config);
+
+        //Si la réponse est Not Found, on renvoie une erreur
+        if (response.status === 404) {
+            throw new Error('Not Found');
+        }
         // Gérer la réponse
         if (!response.ok) {
             const errorBody = await response.json();
@@ -41,9 +46,13 @@ const request = async (
 };
 
 const getPokemons = (page) => {
-    return request(`/pokemon?limit=40&offset=${(page - 1) * 40}`);
+    return request(`pokemon?limit=40&offset=${(page - 1) * 40}`);
+}
+
+const searchPokemons = (search) => {
+    return request(`pokemon/${search}`);
 }
 
 const getPokemon = (id) => {
-    return request(`/pokemon/${id}`);
+    return request(`pokemon/${id}`);
 }

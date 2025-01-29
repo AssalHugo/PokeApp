@@ -1,11 +1,13 @@
 <script>
 import pokemonCard from "@/components/PokemonCard.vue";
 import {watchEffect} from 'vue';
-import {getPokemons, request} from "@/services/httpClient.js";
+import {getPokemons, request, searchPokemons} from "@/services/httpClient.js";
+import SearchBar from "@/components/SearchBar.vue";
 
 //On initialise la méthode fetchPokemons
 export default {
   components: {
+    SearchBar,
     pokemonCard
   },
   data() {
@@ -17,18 +19,27 @@ export default {
     }
   },
   methods: {
-    async fetchPokemons(page) {
+    async fetchPokemons(page = 1, search = "") {
       this.loading = true;
+      this.error = null;
       try {
-        const responsePokemons = await getPokemons(page);
+        if (search === ""){
 
-        //Pour chaque pokemon, on récupère les détails
-        const promises = responsePokemons.results.map(async (pokemon) => {
-          return await request(pokemon.url);
+          const responsePokemons = await getPokemons(page);
+
+          //Pour chaque pokemon, on récupère les détails
+          const promises = responsePokemons.results.map(async (pokemon) => {
+            return await request(pokemon.url);
         });
-
-        //On attend que toutes les requêtes soient terminées
-        this.pokemons = await Promise.all(promises);
+          this.pokemons = await Promise.all(promises);
+        }
+        else {
+          //On enleve tous les pokemons de la liste et on les remplace par celui recherché
+          this.pokemons = [];
+          const response = await searchPokemons(search);
+          this.pokemons.push(response);
+        }
+        console.log(this.pokemons);
       } catch (e) {
         this.error = e;
       } finally {
@@ -44,29 +55,34 @@ export default {
         this.page--;
         this.fetchPokemons(this.page);
       }
+    },
+    searchPokemons(search) {
+      this.fetchPokemons(1, search);
     }
   },
-
   created() {
-    this.fetchPokemons(this.page);
+    this.fetchPokemons();
   }
 }
 </script>
 
 <template>
   <div>
+    <h1 class="text-2xl font-bold text-center text-gray-800">Liste des Pokémons</h1>
     <div v-if="loading" class="text-center">
       <p>Chargement...</p>
     </div>
     <div v-else>
-      <div class="grid grid-cols-1 md:grid-cols-8 gap-4">
+      <SearchBar @search="searchPokemons"/>
+      <div v-if="error" class="text-red-500 text-center">{{ error }}</div>
+      <div v-if="pokemons" class="grid grid-cols-1 md:grid-cols-8 gap-4">
+        <button v-if="pokemons.length === 0"  @click="fetchPokemons()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Reset</button>
         <pokemonCard v-for="pokemon in pokemons" :key="pokemon.id" :pokemon="pokemon"/>
       </div>
       <div class="flex justify-center space-x-4 mt-4">
         <button @click="previousPage()" :disabled="page === 1" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Previous</button>
         <p class="text-gray-700 font-bold">{{ page }}</p>
         <button @click="nextPage()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Next</button>
-        <div v-if="error" class="text-red-500">{{ error }}</div>
       </div>
     </div>
   </div>

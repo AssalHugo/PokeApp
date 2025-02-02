@@ -1,8 +1,8 @@
 <script setup>
 import {RouterLink, RouterView} from 'vue-router'
-import { ref } from 'vue'
+import {useCartStore} from "@/stores/cart.js";
 
-const cart = ref([]) // Ajoutez cette ligne pour le panier
+let cartStore = useCartStore();
 </script>
 
 <template>
@@ -16,7 +16,7 @@ const cart = ref([]) // Ajoutez cette ligne pour le panier
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m4-9l2 9"></path>
           </svg>
-          <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">{{ cart.length }}</span>
+          <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">{{ cartStore.count }}</span>
         </RouterLink>
       </div>
     </div>

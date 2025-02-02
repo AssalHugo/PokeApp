@@ -1,10 +1,24 @@
 <script>
+import {useCartStore} from "@/stores/cart.js";
+
 export default {
   name: "PokemonDetails",
   props: {
     pokemon: {
       type: Object,
       required: true
+    }
+  },
+
+  data() {
+    return {
+      cartStore: useCartStore()
+    }
+  },
+
+  methods: {
+    addToCart(pokemon) {
+      this.cartStore.addPokemon(pokemon);
     }
   }
 }
@@ -13,6 +27,10 @@ export default {
 <template>
   <div v-if="pokemon" class="pokemon-details space-y-4 p-4 bg-white rounded-lg shadow-md">
     <h1 class="text-2xl font-bold text-center">{{ pokemon.name }}</h1>
+    <button @click="addToCart(pokemon)"
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-4">
+      Add to Cart
+    </button>
     <img :src="pokemon.sprites.front_default" :alt="pokemon.name" class="mx-auto">
     <p class="text-center">Height: {{ pokemon.height }}</p>
     <p class="text-center">Weight: {{ pokemon.weight }}</p>

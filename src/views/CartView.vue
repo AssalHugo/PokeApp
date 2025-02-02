@@ -1,10 +1,19 @@
-<script setup>
-import { useCartStore } from '@/stores/cart.js'
+<script>
+import { useCartStore } from '@/stores/cart'
+export default {
+  name: 'CartView',
 
-const cartStore = useCartStore()
+  data() {
+    return {
+      cartStore: useCartStore()
+    }
+  },
 
-const removeFromCart = (pokemon) => {
-  cartStore.removePokemon(pokemon)
+  methods: {
+    removeFromCart(pokemon) {
+      this.cartStore.removePokemon(pokemon)
+    }
+  }
 }
 </script>
 
@@ -16,7 +25,7 @@ const removeFromCart = (pokemon) => {
     </div>
     <div v-else>
       <ul>
-        <li v-for="(pokemon, index) in cartStore.pokemons" :key="index" class="flex justify-between items-center p-4 border-b">
+        <li v-for="(pokemon, index) in cartStore.getPokemons" :key="index" class="flex items-center justify-between p-4 bg-white rounded-lg shadow-md mb-4">
           <span>{{ pokemon.name }}</span>
           <button @click="removeFromCart(pokemon)" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Remove</button>
         </li>

@@ -1,4 +1,6 @@
 <script>
+import {useCartStore} from "@/stores/cart.js";
+
 export default {
   name: "PokemonCard",
   props: {
@@ -6,7 +8,8 @@ export default {
       type: Object,
       required: true
     }
-  }
+  },
+
 }
 </script>
 
@@ -24,6 +27,7 @@ export default {
         {{ type.type.name }}
       </span>
     </div>
+
   </div>
 </template>
 

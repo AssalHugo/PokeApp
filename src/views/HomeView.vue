@@ -1,12 +1,13 @@
 <script>
-import pokemonCard from "@/components/PokemonCard.vue";
-import { getPokemons, request, searchPokemons } from "@/services/httpClient.js";
+import PokemonCard from "@/components/PokemonCard.vue";
+import {getPokemons, request, searchPokemons} from "@/services/httpClient.js";
 import SearchBar from "@/components/SearchBar.vue";
+import {useCartStore} from "@/stores/cart.js";
 
 export default {
   components: {
     SearchBar,
-    pokemonCard
+    PokemonCard
   },
   data() {
     return {
@@ -14,7 +15,8 @@ export default {
       pokemons: [],
       totalNumber: 0,
       error: null,
-      page: 1
+      page: 1,
+      cartStore: useCartStore()
     }
   },
   methods: {
@@ -62,6 +64,9 @@ export default {
       }
 
       return pages;
+    },
+    inCart(pokemon) {
+      return this.cartStore.pokemons.some(p => p.id === pokemon.id);
     }
   },
   created() {
@@ -83,8 +88,8 @@ export default {
                 class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
           Reset
         </button>
-        <pokemonCard v-for="pokemon in pokemons" :key="pokemon.id" :pokemon="pokemon"
-                     @click.native="viewPokemonDetails(pokemon)"/>
+        <PokemonCard v-for="pokemon in pokemons" :key="pokemon.id" :pokemon="pokemon"
+                     @click.native="viewPokemonDetails(pokemon)" :inCart="inCart(pokemon)"/>
       </div>
       <div class="flex justify-center space-x-4 mt-4">
         <div class="flex items-center space-x-2">

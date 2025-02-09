@@ -7,6 +7,10 @@ export default {
     pokemon: {
       type: Object,
       required: true
+    },
+    inCart: {
+      type: Boolean,
+      default: false
     }
   }
 };
@@ -14,6 +18,7 @@ export default {
 
 <template>
   <div class="pokemon-card p-4 bg-white rounded-lg shadow-md cursor-pointer">
+  <h1 v-if="inCart" class="text-right text-red-500 text-sm font-semibold text-xl">In Cart</h1>
     <img class="pokemon-image w-44 mx-auto" :src="pokemon.sprites.front_default" :alt="pokemon.name">
     <div class="pokemon-details mt-4 text-center">
       <div class="pokemon-name text-lg font-bold">{{ pokemon.name }}</div>

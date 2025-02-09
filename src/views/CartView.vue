@@ -1,19 +1,16 @@
 <script>
-import { useCartStore } from '@/stores/cart'
+import {useCartStore} from '@/stores/cart'
+import PokemonCart from "@/components/PokemonCart.vue";
+
 export default {
   name: 'CartView',
+  components: {PokemonCart},
 
   data() {
     return {
       cartStore: useCartStore()
     }
   },
-
-  methods: {
-    removeFromCart(pokemon) {
-      this.cartStore.removePokemon(pokemon)
-    }
-  }
 }
 </script>
 
@@ -24,12 +21,11 @@ export default {
       <p>Your cart is empty.</p>
     </div>
     <div v-else>
-      <ul>
-        <li v-for="(pokemon, index) in cartStore.getPokemons" :key="index" class="flex items-center justify-between p-4 bg-white rounded-lg shadow-md mb-4">
-          <span>{{ pokemon.name }}</span>
-          <button @click="removeFromCart(pokemon)" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Remove</button>
-        </li>
-      </ul>
+      <div class="flex flex-wrap">
+        <div v-for="pokemon in cartStore.pokemons" :key="pokemon.id" class="w-full md:w-1/2 lg:w-1/4 p-2">
+          <PokemonCart :pokemon="pokemon"/>
+        </div>
+      </div>
     </div>
   </div>
 </template>

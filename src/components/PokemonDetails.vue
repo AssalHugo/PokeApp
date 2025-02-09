@@ -12,13 +12,14 @@ export default {
 
   data() {
     return {
-      cartStore: useCartStore()
+      cartStore: useCartStore(),
+      quantity: 1
     }
   },
 
   methods: {
-    addToCart(pokemon) {
-      this.cartStore.addPokemon(pokemon);
+    addToCart(pokemon, quantity = 1) {
+      this.cartStore.addPokemon(pokemon, quantity)
     }
   }
 }
@@ -27,11 +28,19 @@ export default {
 <template>
   <div v-if="pokemon" class="pokemon-details space-y-4 p-4 bg-white rounded-lg shadow-md">
     <h1 class="text-2xl font-bold text-center">{{ pokemon.name }}</h1>
-    <button @click="addToCart(pokemon)"
-            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-4">
+    <input type="number" v-model.number="quantity" min="1" class="border rounded px-2 py-1 w-16 text-center">
+    <button @click="addToCart(pokemon, quantity)"
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
       Add to Cart
     </button>
-    <img :src="pokemon.sprites.front_default" :alt="pokemon.name" class="mx-auto">
+    <div class="pokemon-images flex justify-center space-x-4">
+      <img :src="pokemon.sprites.front_default" :alt="pokemon.name" class="mx-auto w-42 h-42"/>
+      <img :src="pokemon.sprites.back_default" :alt="pokemon.name" class="mx-auto w-42 h-42"/>
+    </div>
+    <div class="pokemon-images flex justify-center space-x-4">
+      <img :src="pokemon.sprites.front_shiny" :alt="pokemon.name" class="mx-auto w-42 h-42"/>
+      <img :src="pokemon.sprites.back_shiny" :alt="pokemon.name" class="mx-auto w-42 h-42"/>
+    </div>
     <p class="text-center">Height: {{ pokemon.height }}</p>
     <p class="text-center">Weight: {{ pokemon.weight }}</p>
     <p class="text-center">Base experience: {{ pokemon.base_experience }}</p>

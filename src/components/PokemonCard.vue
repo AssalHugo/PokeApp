@@ -1,5 +1,5 @@
 <script>
-import {useCartStore} from "@/stores/cart.js";
+import { useCartStore } from "@/stores/cart.js";
 
 export default {
   name: "PokemonCard",
@@ -8,76 +8,36 @@ export default {
       type: Object,
       required: true
     }
-  },
-
-}
+  }
+};
 </script>
 
 <template>
-  <div class="pokemon-card">
-    <img class="pokemon-image" :src="pokemon.sprites.front_default" :alt="pokemon.name">
-    <div class="pokemon-details">
-      <div class="pokemon-name">{{ pokemon.name }}</div>
-      <p class="pokemon-price">
+  <div class="pokemon-card p-4 bg-white rounded-lg shadow-md cursor-pointer">
+    <img class="pokemon-image w-44 mx-auto" :src="pokemon.sprites.front_default" :alt="pokemon.name">
+    <div class="pokemon-details mt-4 text-center">
+      <div class="pokemon-name text-lg font-bold">{{ pokemon.name }}</div>
+      <div class="pokemon-quantity text-sm text-gray-600">
+        Quantity: {{ pokemon.quantity }}
+      </div>
+      <p class="pokemon-price text-sm text-gray-600">
         Price: {{ pokemon.base_experience }} €
       </p>
     </div>
-    <div class="pokemon-types">
-      <span v-for="type in pokemon.types" :key="type.type.name" class="pokemon-type">
+    <div class="pokemon-types mt-2 flex justify-center space-x-2">
+      <span v-for="type in pokemon.types" :key="type.type.name" class="pokemon-type bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
         {{ type.type.name }}
       </span>
     </div>
-
   </div>
 </template>
 
 <style scoped>
 .pokemon-card {
-  max-width: 300px;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-  background-color: #f9f9f9;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-
 .pokemon-card:hover {
   transform: scale(1.05);
-}
-
-.pokemon-image {
-  width: 100%;
-  border-bottom: 1px solid #ddd;
-}
-
-.pokemon-details {
-  padding: 16px;
-}
-
-.pokemon-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-.pokemon-price {
-  font-size: 1rem;
-  color: #666;
-}
-
-.pokemon-types {
-  padding: 16px;
-  border-top: 1px solid #ddd;
-}
-
-.pokemon-type {
-  display: inline-block;
-  background-color: #e0e0e0;
-  border-radius: 12px;
-  padding: 5px 10px;
-  margin: 4px;
-  font-size: 0.875rem;
-  color: #555;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 </style>

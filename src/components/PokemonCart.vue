@@ -19,6 +19,10 @@ export default {
 
 <template>
   <div class="pokemon-cart p-4 bg-white rounded-lg shadow-md">
+    <button @click="cartStore.removePokemon(pokemon)"
+            class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      Remove
+    </button>
     <img class="pokemon-image w-34 mx-auto" :src="pokemon.sprites.front_default" :alt="pokemon.name">
     <div class="pokemon-details mt-4 text-center">
       <div class="pokemon-name text-lg font-bold">{{ pokemon.name }}</div>

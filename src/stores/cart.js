@@ -22,14 +22,8 @@ export const useCartStore = defineStore('cart', {
             localStorage.setItem('pokemons', JSON.stringify(this.pokemons));
         },
         //On retire un pokemon du cart
-        removePokemon(pokemon, quantity = 1) {
-            const existingPokemon = this.pokemons.find(p => p.id === pokemon.id);
-            if (existingPokemon) {
-                existingPokemon.quantity -= quantity;
-                if (existingPokemon.quantity <= 0) {
-                    this.pokemons = this.pokemons.filter(p => p.id !== pokemon.id);
-                }
-            }
+        removePokemon(pokemon) {
+            this.pokemons = this.pokemons.filter(p => p.id !== pokemon.id);
             //On ajoute les pokemons au localStorage
             localStorage.setItem('pokemons', JSON.stringify(this.pokemons));
         },

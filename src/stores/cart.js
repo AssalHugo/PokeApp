@@ -38,6 +38,11 @@ export const useCartStore = defineStore('cart', {
             }
             //On ajoute les pokemons au localStorage
             localStorage.setItem('pokemons', JSON.stringify(this.pokemons));
+        },
+        clearCart() {
+            this.pokemons = [];
+            //On ajoute les pokemons au localStorage
+            localStorage.setItem('pokemons', JSON.stringify(this.pokemons));
         }
     },
     //On récupère le nombre de pokemons
@@ -57,6 +62,9 @@ export const useCartStore = defineStore('cart', {
         //On récupère le prix total des pokemons
         totalPrice() {
             return this.pokemons.reduce((acc, p) => acc + p.quantity * p.base_experience, 0);
+        },
+        getByType(type) {
+            return this.pokemons.filter(p => p.types.includes(type));
         }
     },
 });

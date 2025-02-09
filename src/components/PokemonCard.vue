@@ -35,7 +35,7 @@ export default {
       </span>
     </div>
   </div>
-</template>
+</template>32
 
 <style scoped>
 .pokemon-card {

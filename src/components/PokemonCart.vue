@@ -22,16 +22,16 @@ export default {
     <img class="pokemon-image w-34 mx-auto" :src="pokemon.sprites.front_default" :alt="pokemon.name">
     <div class="pokemon-details mt-4 text-center">
       <div class="pokemon-name text-lg font-bold">{{ pokemon.name }}</div>
-      <input type="number" v-model.number="quantity" min="0" class="border rounded px-2 py-1 w-16 text-center">
+      <input type="number" v-model.number="this.quantity" min="0" class="border rounded px-2 py-1 w-16 text-center">
       <button @click="cartStore.setPokemonQuantity(pokemon, quantity)"
               class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
         Update Quantity
       </button>
       <p class="pokemon-price text-sm text-gray-600">
-        Price individual: {{ pokemon.base_experience }} €
+        Individual price : {{ pokemon.base_experience }} €
       </p>
       <p class="pokemon-price text-sm text-gray-600">
-        Price total: {{ pokemon.base_experience * quantity }} €
+        Total price : {{ pokemon.base_experience * pokemon.quantity }} €
       </p>
     </div>
     <div class="pokemon-types mt-2 flex justify-center space-x-2">

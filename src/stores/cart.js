@@ -59,6 +59,10 @@ export const useCartStore = defineStore('cart', {
                 }
             }
             return this.pokemons;
+        },
+        //On récupère le prix total des pokemons
+        totalPrice() {
+            return this.pokemons.reduce((acc, p) => acc + p.quantity * p.base_experience, 0);
         }
     },
 });

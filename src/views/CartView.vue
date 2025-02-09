@@ -26,6 +26,7 @@ export default {
           <PokemonCart :pokemon="pokemon"/>
         </div>
       </div>
+<h1 class="text-right text-gray-800 font-semibold text-3xl">Total: {{ cartStore.totalPrice }} €</h1>
     </div>
   </div>
 </template>

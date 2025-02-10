@@ -4,6 +4,7 @@ import PokemonDetailsView from '../views/PokemonDetailsView.vue'
 import CartView from '../views/CartView.vue'
 import OrderView from "@/views/OrderView.vue";
 import OrderConfirmationView from "@/views/OrderConfirmationView.vue";
+import PastOrdersView from "@/views/PastOrdersView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,11 @@ const router = createRouter({
             name: 'order-confirmed',
             component: OrderConfirmationView,
             props: true
+        },
+        {
+            path: '/cart/past-orders',
+            name: 'past-orders',
+            component: PastOrdersView
         }
     ],
 })

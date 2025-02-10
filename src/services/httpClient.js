@@ -56,3 +56,11 @@ const searchPokemons = (search) => {
 const getPokemon = (id) => {
     return request(`pokemon/${id}`);
 }
+
+export const getAllTypes = () => {
+    return request('type');
+}
+
+export const getPokemonByType = (type) => {
+    return request(`type/${type}`);
+}

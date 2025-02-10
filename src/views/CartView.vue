@@ -1,16 +1,20 @@
 <script>
-import {useCartStore} from '@/stores/cart'
+import { useCartStore } from '@/stores/cart';
 import PokemonCart from "@/components/PokemonCart.vue";
+import { validateCartMixin } from "@/mixins/validateCart";
 
 export default {
   name: 'CartView',
-  components: {PokemonCart},
-
+  components: { PokemonCart },
+  mixins: [validateCartMixin],
   data() {
     return {
       cartStore: useCartStore()
     }
   },
+  mounted() {
+    this.validateCart();
+  }
 }
 </script>
 
